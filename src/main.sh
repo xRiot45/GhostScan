@@ -34,6 +34,7 @@ function show_host_discovery() {
     echo -e "${CYN}│ ${GRN}3${RST}) ICMP Echo Ping Scan         ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}4${RST}) ICMP Echo Ping Sweep        ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}5${RST}) ICMP Timestamp Ping Scan    ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}6${RST}) ICMP Address Mask Ping Scan ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}5${RST}) Back                        ${CYN}│${RST}"
     echo -e "${CYN}└──────────────────────────────┘${RST}"
 }
@@ -68,7 +69,8 @@ while true; do
         3) DISCOVERY_METHOD="icmp-echo-ping-scan" ;;
         4) DISCOVERY_METHOD="icmp-echo-ping-sweep" ;;
         5) DISCOVERY_METHOD="icmp-timestamp-ping-scan" ;;
-        6)
+        6) DISCOVERY_METHOD="icmp-address-mask-ping-scan" ;;
+        7)
             banner
             continue
             ;;
