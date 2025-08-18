@@ -31,8 +31,8 @@ function show_host_discovery() {
     echo -e "${CYN}┌──────────────────────────────┐${RST}"
     echo -e "${CYN}│ ${GRN}1${RST}) ARP Ping Scan           ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}2${RST}) UDP Ping Scan           ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}3${RST}) ICMP Echo Scan          ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}4${RST}) ICMP Timestamp Scan     ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}3${RST}) ICMP Echo Ping Scan     ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}4${RST}) ICMP Echo Ping Sweep    ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}5${RST}) Back                    ${CYN}│${RST}"
     echo -e "${CYN}└──────────────────────────────┘${RST}"
 }
@@ -65,7 +65,8 @@ while true; do
         1) DISCOVERY_METHOD="arp-ping-scan" ;;
         2) DISCOVERY_METHOD="udp-ping-scan" ;;
         3) DISCOVERY_METHOD="icmp-echo-ping-scan" ;;
-        4)
+        4) DISCOVERY_METHOD="icmp-echo-ping-sweep" ;;
+        5)
             banner
             continue
             ;;
