@@ -30,6 +30,9 @@ icmp-echo-ping-sweep)
     SUBNET="${TARGET}/24"
     (nmap -sn -PE $SUBNET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+icmp-timestamp-ping-scan)
+    (nmap -sn -PP $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $METHOD"
     exit 1
