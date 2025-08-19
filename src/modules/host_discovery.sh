@@ -42,6 +42,9 @@ tcp-syn-ping-scan)
 tcp-ack-ping-scan)
     (nmap -sn -PA $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+ip-protocol-ping-scan)
+    (nmap -sn -PO $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $METHOD"
     exit 1
