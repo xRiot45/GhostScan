@@ -38,6 +38,7 @@ function show_host_discovery() {
     echo -e "${CYN}│ ${GRN}7${RST}) TCP SYN Ping Scan           ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}8${RST}) TCP ACK Ping Scan           ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}9${RST}) IP Protocol Ping Scan       ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}10${RST}) Run All Methods            ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}0${RST}) Back                        ${CYN}│${RST}"
     echo -e "${CYN}└─────────────────────────────────┘${RST}"
 }
@@ -76,6 +77,17 @@ while true; do
         7) DISCOVERY_METHOD="tcp-syn-ping-scan" ;;
         8) DISCOVERY_METHOD="tcp-ack-ping-scan" ;;
         9) DISCOVERY_METHOD="ip-protocol-ping-scan" ;;
+        10)
+            METHODS=("arp-ping-scan" "udp-ping-scan" "icmp-echo-ping-scan"
+                "icmp-echo-ping-sweep" "icmp-timestamp-ping-scan"
+                "icmp-address-mask-ping-scan" "tcp-syn-ping-scan"
+                "tcp-ack-ping-scan" "ip-protocol-ping-scan")
+            for DISCOVERY_METHOD in "${METHODS[@]}"; do
+                echo -e "${YLW}[i] Running $DISCOVERY_METHOD...${RST}"
+                bash src/modules/host_discovery.sh "$target" "$TARGET_RAW_DIR" "$DISCOVERY_METHOD"
+            done
+            continue
+            ;;
         0)
             banner
             continue
