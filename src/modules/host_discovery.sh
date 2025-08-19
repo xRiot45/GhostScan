@@ -36,6 +36,9 @@ icmp-timestamp-ping-scan)
 icmp-address-mask-ping-scan)
     (nmap -sn -PM $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+tcp-syn-ping-scan)
+    (nmap -sn -PS $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $METHOD"
     exit 1

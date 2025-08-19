@@ -28,15 +28,16 @@ function show_menu() {
 
 # Submenu box for host discovery
 function show_host_discovery() {
-    echo -e "${CYN}┌──────────────────────────────┐${RST}"
+    echo -e "${CYN}┌─────────────────────────────────┐${RST}"
     echo -e "${CYN}│ ${GRN}1${RST}) ARP Ping Scan               ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}2${RST}) UDP Ping Scan               ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}3${RST}) ICMP Echo Ping Scan         ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}4${RST}) ICMP Echo Ping Sweep        ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}5${RST}) ICMP Timestamp Ping Scan    ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}6${RST}) ICMP Address Mask Ping Scan ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}7${RST}) TCP SYN Ping Scan           ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}5${RST}) Back                        ${CYN}│${RST}"
-    echo -e "${CYN}└──────────────────────────────┘${RST}"
+    echo -e "${CYN}└─────────────────────────────────┘${RST}"
 }
 
 # Check root
@@ -70,7 +71,8 @@ while true; do
         4) DISCOVERY_METHOD="icmp-echo-ping-sweep" ;;
         5) DISCOVERY_METHOD="icmp-timestamp-ping-scan" ;;
         6) DISCOVERY_METHOD="icmp-address-mask-ping-scan" ;;
-        7)
+        7) DISCOVERY_METHOD="tcp-syn-ping-scan" ;;
+        8)
             banner
             continue
             ;;
