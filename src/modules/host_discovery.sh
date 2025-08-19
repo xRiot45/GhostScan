@@ -39,6 +39,9 @@ icmp-address-mask-ping-scan)
 tcp-syn-ping-scan)
     (nmap -sn -PS $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+tcp-ack-ping-scan)
+    (nmap -sn -PA $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $METHOD"
     exit 1
