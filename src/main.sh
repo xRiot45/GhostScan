@@ -27,7 +27,7 @@ function show_menu() {
 }
 
 # Submenu box for host discovery
-function show_host_discovery() {
+function show_menu_host_discovery() {
     echo -e "${CYN}┌─────────────────────────────────┐${RST}"
     echo -e "${CYN}│ ${GRN}1${RST}) ARP Ping Scan               ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}2${RST}) UDP Ping Scan               ${CYN}│${RST}"
@@ -43,6 +43,28 @@ function show_host_discovery() {
     echo -e "${CYN}└─────────────────────────────────┘${RST}"
 }
 
+# Submenu box for port discovery
+function show_menu_port_discovery() {
+    echo -e "${CYN}┌───────────────────────────────────────────────┐${RST}"
+    echo -e "${CYN}│ ${GRN}1${RST}) TCP Connect / Full-Open Scan         ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}2${RST}) Stealth Scan (Half-Open Scan)        ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}3${RST}) Inverse TCP Flag Scan                ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}4${RST}) Xmas Scan                            ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}5${RST}) FIN Scan                             ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}6${RST}) NULL Scan                            ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}7${RST}) TCP Maimon Scan                      ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}8${RST}) ACK Flag Probe Scan                  ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}9${RST}) TTL-Based ACK Flag Probe Scan        ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}10${RST}) Window-Based ACK Flag Probe Scan    ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}11${RST}) IDLE / IPID Header Scan             ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}12${RST}) UDP Scan                            ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}13${RST}) SCTP INIT Scan                      ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}14${RST}) SCTP COOKIE ECHO Scan               ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}15${RST}) Run All Methods                     ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}0${RST}) Back                                 ${CYN}│${RST}"
+    echo -e "${CYN}└───────────────────────────────────────────────┘${RST}"
+}
+
 # Check root
 if [ "$EUID" -ne 0 ]; then
     echo -e "${RED}[!]${RST} Run as root!"
@@ -52,7 +74,7 @@ fi
 
 # Start program
 banner
-read -p "$(echo -e ${YLW}[?]${RST} Enter target IP/Range:)" target
+read -p "$(echo -e ${YLW}[?]${RST} Enter target IP/Range:) " target
 
 SAFE_TARGET=$(echo "$target" | sed 's/\//_/g')
 TARGET_RAW_DIR="$RAW_DIR/$SAFE_TARGET"
@@ -64,7 +86,7 @@ while true; do
 
     case $opt in
     1)
-        show_host_discovery
+        show_menu_host_discovery
         read -p "Select Method: " method
 
         case $method in
@@ -102,7 +124,9 @@ while true; do
         bash src/modules/host_discovery.sh "$target" "$TARGET_RAW_DIR" "$DISCOVERY_METHOD"
         ;;
     2)
-        echo -e "${CYN}[i] Port & Service Scan coming soon...${RST}"
+        show_menu_port_discovery
+        read -p "Select Method: " method
+
         ;;
     3)
         echo -e "${CYN}[i] OS Detection coming soon...${RST}"
