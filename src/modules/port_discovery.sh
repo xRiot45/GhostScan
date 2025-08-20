@@ -23,6 +23,39 @@ tcp-connect-scan)
 stealth-scan)
     (nmap -sS -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+xmas-scan)
+    (nmap -sX -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+fin-scan)
+    (nmap -sF -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+null-scan)
+    (nmap -sN -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+    # maimon-scan)
+    #     (nmap -sM -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # ack-flag-probe-scan)
+    #     (nmap -sA -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # ttl-based-ack-flag-probe-scan)
+    #     (nmap -sA --ttl 5 -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # window-based-ack-flag-probe-scan)
+    #     (nmap -sA --window 1024 -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # idle-scan)
+    #     (nmap -sI zombie_host $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # udp-scan)
+    #     (nmap -sU -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # sctp-init-scan)
+    #     (nmap -sY -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    #     ;;
+    # sctp-cookie-echo-scan)
+    # (nmap -sZ -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    # ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $METHOD"
     exit 1

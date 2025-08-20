@@ -16,7 +16,7 @@ RAW_DIR="src/results/raw"
 PARSED_DIR="src/results/parsed"
 mkdir -p "$RAW_DIR" "$PARSED_DIR"
 
-# Menu box
+# Main Menu
 function show_menu() {
     echo -e "${BLU}┌─────────────────────────────────┐${RST}"
     echo -e "${BLU}│ ${GRN}1${RST}) Host Discovery              ${BLU}│${RST}"
@@ -26,7 +26,7 @@ function show_menu() {
     echo -e "${BLU}└─────────────────────────────────┘${RST}"
 }
 
-# Submenu box for host discovery
+# Submenu: Host Discovery
 function show_menu_host_discovery() {
     echo -e "${CYN}┌─────────────────────────────────┐${RST}"
     echo -e "${CYN}│ ${GRN}1${RST}) ARP Ping Scan               ${CYN}│${RST}"
@@ -43,26 +43,33 @@ function show_menu_host_discovery() {
     echo -e "${CYN}└─────────────────────────────────┘${RST}"
 }
 
-# Submenu box for port discovery
+# Submenu: Port Discovery
 function show_menu_port_discovery() {
     echo -e "${CYN}┌───────────────────────────────────────────────┐${RST}"
     echo -e "${CYN}│ ${GRN}1${RST}) TCP Connect / Full-Open Scan         ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}2${RST}) Stealth Scan (Half-Open Scan)        ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}3${RST}) Inverse TCP Flag Scan                ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}4${RST}) Xmas Scan                            ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}5${RST}) FIN Scan                             ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}6${RST}) NULL Scan                            ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}7${RST}) TCP Maimon Scan                      ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}8${RST}) ACK Flag Probe Scan                  ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}9${RST}) TTL-Based ACK Flag Probe Scan        ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}10${RST}) Window-Based ACK Flag Probe Scan    ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}11${RST}) IDLE / IPID Header Scan             ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}12${RST}) UDP Scan                            ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}13${RST}) SCTP INIT Scan                      ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}14${RST}) SCTP COOKIE ECHO Scan               ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}15${RST}) Run All Methods                     ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}3${RST}) Inverse TCP Flag Scan (Submenu)      ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}4${RST}) TCP Maimon Scan                      ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}5${RST}) ACK Flag Probe Scan                  ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}6${RST}) TTL-Based ACK Flag Probe Scan        ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}7${RST}) Window-Based ACK Flag Probe Scan     ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}8${RST}) IDLE / IPID Header Scan              ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}9${RST}) UDP Scan                             ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}10${RST}) SCTP INIT Scan                      ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}11${RST}) SCTP COOKIE ECHO Scan               ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}12${RST}) Run All Methods                     ${CYN}│${RST}"
     echo -e "${CYN}│ ${GRN}0${RST}) Back                                 ${CYN}│${RST}"
     echo -e "${CYN}└───────────────────────────────────────────────┘${RST}"
+}
+
+# Submenu: Inverse TCP Flag Scan
+function show_menu_inverse_tcp_flag() {
+    echo -e "${CYN}┌─────────────────────────────────┐${RST}"
+    echo -e "${CYN}│ ${GRN}1${RST}) Xmas Scan                   ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}2${RST}) FIN Scan                    ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}3${RST}) NULL Scan                   ${CYN}│${RST}"
+    echo -e "${CYN}│ ${GRN}0${RST}) Back                        ${CYN}│${RST}"
+    echo -e "${CYN}└─────────────────────────────────┘${RST}"
 }
 
 # Check root
@@ -72,7 +79,7 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Start program
+# Start
 banner
 read -p "$(echo -e ${YLW}[?]${RST} Enter target IP/Range:) " target
 
@@ -85,7 +92,7 @@ while true; do
     read -p "Select Option: " opt
 
     case $opt in
-    1)
+    1) # Host Discovery
         show_menu_host_discovery
         read -p "Select Method: " method
 
@@ -120,16 +127,61 @@ while true; do
             ;;
         esac
 
-        # Call the host discovery module
-        bash src/modules/host_discovery.sh "$target" "$TARGET_RAW_DIR" "$DISCOVERY_METHOD"
+        bash src/modules/host_discovery.sh "$target" "$TARGET_RAW_DIR" "$HOST_DISCOVERY_METHOD"
         ;;
-    2)
+
+    2) # Port Discovery
         show_menu_port_discovery
         read -p "Select Method: " method
 
         case $method in
         1) PORT_DISCOVERY_METHOD="tcp-connect-scan" ;;
         2) PORT_DISCOVERY_METHOD="stealth-scan" ;;
+        3) # Inverse TCP submenu
+            while true; do
+                show_menu_inverse_tcp_flag
+                read -p "Select Inverse TCP Method: " inv
+                case $inv in
+                1)
+                    PORT_DISCOVERY_METHOD="xmas-scan"
+                    break
+                    ;;
+                2)
+                    PORT_DISCOVERY_METHOD="fin-scan"
+                    break
+                    ;;
+                3)
+                    PORT_DISCOVERY_METHOD="null-scan"
+                    break
+                    ;;
+                0)
+                    PORT_DISCOVERY_METHOD=""
+                    break
+                    ;;
+                *) echo -e "${RED}[!] Invalid option${RST}" ;;
+                esac
+            done
+            [ -z "$PORT_DISCOVERY_METHOD" ] && continue
+            ;;
+        # 4) PORT_DISCOVERY_METHOD="maimon-scan" ;;
+        # 5) PORT_DISCOVERY_METHOD="ack-flag-probe-scan" ;;
+        # 6) PORT_DISCOVERY_METHOD="ttl-based-ack-flag-probe-scan" ;;
+        # 7) PORT_DISCOVERY_METHOD="window-based-ack-flag-probe-scan" ;;
+        # 8) PORT_DISCOVERY_METHOD="idle-scan" ;;
+        # 9) PORT_DISCOVERY_METHOD="udp-scan" ;;
+        # 10) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
+        # 11) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
+        # 12)
+        #     METHODS=("tcp-connect-scan" "stealth-scan" "xmas-scan" "fin-scan" "null-scan"
+        #         "maimon-scan" "ack-flag-probe-scan" "ttl-based-ack-flag-probe-scan"
+        #         "window-based-ack-flag-probe-scan" "idle-scan"
+        #         "udp-scan" "sctp-init-scan" "sctp-cookie-echo-scan")
+        #     for PORT_DISCOVERY_METHOD in "${METHODS[@]}"; do
+        #         echo -e "${YLW}[i] Running $PORT_DISCOVERY_METHOD...${RST}"
+        #         bash src/modules/port_discovery.sh "$target" "$TARGET_RAW_DIR" "$PORT_DISCOVERY_METHOD"
+        #     done
+        #     continue
+        #     ;;
         0)
             banner
             continue
@@ -140,9 +192,9 @@ while true; do
             ;;
         esac
 
-        # Call the port discovery module
         bash src/modules/port_discovery.sh "$target" "$TARGET_RAW_DIR" "$PORT_DISCOVERY_METHOD"
         ;;
+
     3)
         echo -e "${CYN}[i] OS Detection coming soon...${RST}"
         ;;
@@ -150,8 +202,6 @@ while true; do
         echo -e "${MAG}[i] Exiting GhostScan...${RST}"
         exit 0
         ;;
-    *)
-        echo -e "${RED}[!] Invalid choice${RST}"
-        ;;
+    *) echo -e "${RED}[!] Invalid choice${RST}" ;;
     esac
 done
