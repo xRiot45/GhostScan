@@ -32,9 +32,9 @@ fin-scan)
 null-scan)
     (nmap -sN -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-    # maimon-scan)
-    #     (nmap -sM -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
+tcp-maimon-scan)
+    (nmap -sM -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
     # ack-flag-probe-scan)
     #     (nmap -sA -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     #     ;;

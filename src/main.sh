@@ -137,7 +137,7 @@ while true; do
         case $method in
         1) PORT_DISCOVERY_METHOD="tcp-connect-scan" ;;
         2) PORT_DISCOVERY_METHOD="stealth-scan" ;;
-        3) # Inverse TCP submenu
+        3)
             while true; do
                 show_menu_inverse_tcp_flag
                 read -p "Select Inverse TCP Method: " inv
@@ -163,7 +163,7 @@ while true; do
             done
             [ -z "$PORT_DISCOVERY_METHOD" ] && continue
             ;;
-        # 4) PORT_DISCOVERY_METHOD="maimon-scan" ;;
+        4) PORT_DISCOVERY_METHOD="tcp-maimon-scan" ;;
         # 5) PORT_DISCOVERY_METHOD="ack-flag-probe-scan" ;;
         # 6) PORT_DISCOVERY_METHOD="ttl-based-ack-flag-probe-scan" ;;
         # 7) PORT_DISCOVERY_METHOD="window-based-ack-flag-probe-scan" ;;
