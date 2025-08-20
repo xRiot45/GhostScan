@@ -6,7 +6,7 @@ METHOD=$3
 
 source src/utils/progress_bar.sh
 
-OUTPUT_DIR="$TARGET_DIR/port_discovery/"
+OUTPUT_DIR="$TARGET_DIR/port_discovery"
 mkdir -p "$OUTPUT_DIR"
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
@@ -19,6 +19,9 @@ echo ""
 case $METHOD in
 tcp-connect-scan)
     (nmap -sT -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+stealth-scan)
+    (nmap -sS -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $METHOD"

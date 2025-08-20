@@ -129,6 +129,7 @@ while true; do
 
         case $method in
         1) PORT_DISCOVERY_METHOD="tcp-connect-scan" ;;
+        2) PORT_DISCOVERY_METHOD="stealth-scan" ;;
         0)
             banner
             continue
