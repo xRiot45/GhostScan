@@ -44,9 +44,11 @@ ttl-based-ack-flag-probe-scan)
 window-based-ack-flag-probe-scan)
     (nmap -sA -sW -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-    # idle-scan)
-    #     (nmap -sI zombie_host $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
+idle-scan:*)
+    zombie_ip=$(echo "$METHOD" | cut -d':' -f2)
+    (nmap -sI $zombie_ip $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+
     # udp-scan)
     #     (nmap -sU -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     #     ;;

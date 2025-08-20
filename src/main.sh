@@ -197,9 +197,11 @@ while true; do
             done
             [ -z "$PORT_DISCOVERY_METHOD" ] && continue
             ;;
-        # 6) PORT_DISCOVERY_METHOD="ttl-based-ack-flag-probe-scan" ;;
-        # 7) PORT_DISCOVERY_METHOD="window-based-ack-flag-probe-scan" ;;
-        # 8) PORT_DISCOVERY_METHOD="idle-scan" ;;
+        6)
+            read -p "$(echo -e ${YLW}[?]${RST} Enter Zombie IP:) " zombie_ip
+            PORT_DISCOVERY_METHOD="idle-scan:$zombie_ip"
+            ;;
+
         # 9) PORT_DISCOVERY_METHOD="udp-scan" ;;
         # 10) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
         # 11) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
