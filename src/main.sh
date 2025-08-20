@@ -18,12 +18,12 @@ mkdir -p "$RAW_DIR" "$PARSED_DIR"
 
 # Menu box
 function show_menu() {
-    echo -e "${BLU}┌────────────────────────────┐${RST}"
-    echo -e "${BLU}│ ${GRN}1${RST}) Host Discovery         ${BLU}│${RST}"
-    echo -e "${BLU}│ ${GRN}2${RST}) Port & Service Scan    ${BLU}│${RST}"
-    echo -e "${BLU}│ ${GRN}3${RST}) OS Detection           ${BLU}│${RST}"
-    echo -e "${BLU}│ ${GRN}4${RST}) Exit                   ${BLU}│${RST}"
-    echo -e "${BLU}└────────────────────────────┘${RST}"
+    echo -e "${BLU}┌─────────────────────────────────┐${RST}"
+    echo -e "${BLU}│ ${GRN}1${RST}) Host Discovery              ${BLU}│${RST}"
+    echo -e "${BLU}│ ${GRN}2${RST}) Port & Service Discovery    ${BLU}│${RST}"
+    echo -e "${BLU}│ ${GRN}3${RST}) OS Detection                ${BLU}│${RST}"
+    echo -e "${BLU}│ ${GRN}4${RST}) Exit                        ${BLU}│${RST}"
+    echo -e "${BLU}└─────────────────────────────────┘${RST}"
 }
 
 # Submenu box for host discovery
@@ -90,23 +90,23 @@ while true; do
         read -p "Select Method: " method
 
         case $method in
-        1) DISCOVERY_METHOD="arp-ping-scan" ;;
-        2) DISCOVERY_METHOD="udp-ping-scan" ;;
-        3) DISCOVERY_METHOD="icmp-echo-ping-scan" ;;
-        4) DISCOVERY_METHOD="icmp-echo-ping-sweep" ;;
-        5) DISCOVERY_METHOD="icmp-timestamp-ping-scan" ;;
-        6) DISCOVERY_METHOD="icmp-address-mask-ping-scan" ;;
-        7) DISCOVERY_METHOD="tcp-syn-ping-scan" ;;
-        8) DISCOVERY_METHOD="tcp-ack-ping-scan" ;;
-        9) DISCOVERY_METHOD="ip-protocol-ping-scan" ;;
+        1) HOST_DISCOVERY_METHOD="arp-ping-scan" ;;
+        2) HOST_DISCOVERY_METHOD="udp-ping-scan" ;;
+        3) HOST_DISCOVERY_METHOD="icmp-echo-ping-scan" ;;
+        4) HOST_DISCOVERY_METHOD="icmp-echo-ping-sweep" ;;
+        5) HOST_DISCOVERY_METHOD="icmp-timestamp-ping-scan" ;;
+        6) HOST_DISCOVERY_METHOD="icmp-address-mask-ping-scan" ;;
+        7) HOST_DISCOVERY_METHOD="tcp-syn-ping-scan" ;;
+        8) HOST_DISCOVERY_METHOD="tcp-ack-ping-scan" ;;
+        9) HOST_DISCOVERY_METHOD="ip-protocol-ping-scan" ;;
         10)
             METHODS=("arp-ping-scan" "udp-ping-scan" "icmp-echo-ping-scan"
                 "icmp-echo-ping-sweep" "icmp-timestamp-ping-scan"
                 "icmp-address-mask-ping-scan" "tcp-syn-ping-scan"
                 "tcp-ack-ping-scan" "ip-protocol-ping-scan")
-            for DISCOVERY_METHOD in "${METHODS[@]}"; do
-                echo -e "${YLW}[i] Running $DISCOVERY_METHOD...${RST}"
-                bash src/modules/host_discovery.sh "$target" "$TARGET_RAW_DIR" "$DISCOVERY_METHOD"
+            for HOST_DISCOVERY_METHOD in "${METHODS[@]}"; do
+                echo -e "${YLW}[i] Running $HOST_DISCOVERY_METHOD...${RST}"
+                bash src/modules/host_discovery.sh "$target" "$TARGET_RAW_DIR" "$HOST_DISCOVERY_METHOD"
             done
             continue
             ;;
