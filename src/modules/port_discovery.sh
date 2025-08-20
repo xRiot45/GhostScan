@@ -35,15 +35,15 @@ null-scan)
 tcp-maimon-scan)
     (nmap -sM -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-    # ack-flag-probe-scan)
-    #     (nmap -sA -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
-    # ttl-based-ack-flag-probe-scan)
-    #     (nmap -sA --ttl 5 -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
-    # window-based-ack-flag-probe-scan)
-    #     (nmap -sA --window 1024 -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
+ack-flag-probe-scan)
+    (nmap -sA -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+ttl-based-ack-flag-probe-scan)
+    (nmap -sA --ttl 100 -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+window-based-ack-flag-probe-scan)
+    (nmap -sA -sW -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
     # idle-scan)
     #     (nmap -sI zombie_host $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     #     ;;

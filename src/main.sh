@@ -51,25 +51,32 @@ function show_menu_port_discovery() {
     echo -e "   ${GRN}3${RST}) Inverse TCP Flag Scan (Submenu)      "
     echo -e "   ${GRN}4${RST}) TCP Maimon Scan                      "
     echo -e "   ${GRN}5${RST}) ACK Flag Probe Scan                  "
-    echo -e "   ${GRN}6${RST}) TTL-Based ACK Flag Probe Scan        "
-    echo -e "   ${GRN}7${RST}) Window-Based ACK Flag Probe Scan     "
-    echo -e "   ${GRN}8${RST}) IDLE / IPID Header Scan              "
-    echo -e "   ${GRN}9${RST}) UDP Scan                             "
-    echo -e "   ${GRN}10${RST}) SCTP INIT Scan                      "
-    echo -e "   ${GRN}11${RST}) SCTP COOKIE ECHO Scan               "
-    echo -e "   ${GRN}12${RST}) Run All Methods                     "
+    echo -e "   ${GRN}6${RST}) IDLE / IPID Header Scan              "
+    echo -e "   ${GRN}7${RST}) UDP Scan                             "
+    echo -e "   ${GRN}8${RST}) SCTP INIT Scan                       "
+    echo -e "   ${GRN}9${RST}) SCTP COOKIE ECHO Scan                "
     echo -e "   ${GRN}0${RST}) Back                                 "
     echo -e "   "
 }
 
 # Submenu: Inverse TCP Flag Scan
 function show_menu_inverse_tcp_flag() {
-    echo -e "${CYN}┌─────────────────────────────────┐${RST}"
-    echo -e "${CYN}│ ${GRN}1${RST}) Xmas Scan                   ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}2${RST}) FIN Scan                    ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}3${RST}) NULL Scan                   ${CYN}│${RST}"
-    echo -e "${CYN}│ ${GRN}0${RST}) Back                        ${CYN}│${RST}"
-    echo -e "${CYN}└─────────────────────────────────┘${RST}"
+    echo -e "   "
+    echo -e "   ${GRN}1${RST}) Xmas Scan "
+    echo -e "   ${GRN}2${RST}) FIN Scan  "
+    echo -e "   ${GRN}3${RST}) NULL Scan "
+    echo -e "   ${GRN}0${RST}) Back      "
+    echo -e "   "
+}
+
+# Submenu: ACK Flag Probe Scan
+function show_menu_ack_probe_scan() {
+    echo -e "   "
+    echo -e "   ${GRN}1${RST}) ACK Flag Probe Scan          "
+    echo -e "   ${GRN}2${RST}) TTL-Based ACK Flag Probe     "
+    echo -e "   ${GRN}3${RST}) Window-Based ACK Flag Probe  "
+    echo -e "   ${GRN}0${RST}) Back                         "
+    echo -e "   "
 }
 
 # Check root
@@ -164,7 +171,32 @@ while true; do
             [ -z "$PORT_DISCOVERY_METHOD" ] && continue
             ;;
         4) PORT_DISCOVERY_METHOD="tcp-maimon-scan" ;;
-        # 5) PORT_DISCOVERY_METHOD="ack-flag-probe-scan" ;;
+        5)
+            while true; do
+                show_menu_ack_probe_scan
+                read -p "Select ACK Flag Probe Method: " ack
+                case $ack in
+                1)
+                    PORT_DISCOVERY_METHOD="ack-flag-probe-scan"
+                    break
+                    ;;
+                2)
+                    PORT_DISCOVERY_METHOD="ttl-based-ack-flag-probe-scan"
+                    break
+                    ;;
+                3)
+                    PORT_DISCOVERY_METHOD="window-based-ack-flag-probe-scan"
+                    break
+                    ;;
+                0)
+                    PORT_DISCOVERY_METHOD=""
+                    break
+                    ;;
+                *) echo -e "${RED}[!] Invalid option${RST}" ;;
+                esac
+            done
+            [ -z "$PORT_DISCOVERY_METHOD" ] && continue
+            ;;
         # 6) PORT_DISCOVERY_METHOD="ttl-based-ack-flag-probe-scan" ;;
         # 7) PORT_DISCOVERY_METHOD="window-based-ack-flag-probe-scan" ;;
         # 8) PORT_DISCOVERY_METHOD="idle-scan" ;;
