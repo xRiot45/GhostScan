@@ -127,6 +127,20 @@ while true; do
         show_menu_port_discovery
         read -p "Select Method: " method
 
+        case $method in
+        1) PORT_DISCOVERY_METHOD="tcp-connect-scan" ;;
+        0)
+            banner
+            continue
+            ;;
+        *)
+            echo -e "${RED}[!] Invalid option${RST}"
+            continue
+            ;;
+        esac
+
+        # Call the port discovery module
+        bash src/modules/port_discovery.sh "$target" "$TARGET_RAW_DIR" "$PORT_DISCOVERY_METHOD"
         ;;
     3)
         echo -e "${CYN}[i] OS Detection coming soon...${RST}"
