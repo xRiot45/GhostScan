@@ -204,7 +204,7 @@ while true; do
 
         7) PORT_DISCOVERY_METHOD="udp-scan" ;;
         8) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
-        # 9) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
+        9) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
         0)
             banner
             continue

@@ -54,9 +54,9 @@ udp-scan)
 sctp-init-scan)
     (nmap -sY -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-    # sctp-cookie-echo-scan)
-    # (nmap -sZ -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    # ;;
+sctp-cookie-echo-scan)
+    (nmap -sZ -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $METHOD"
     exit 1
