@@ -48,10 +48,9 @@ idle-scan:*)
     zombie_ip=$(echo "$METHOD" | cut -d':' -f2)
     (nmap -sI $zombie_ip $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-
-    # udp-scan)
-    #     (nmap -sU -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
+udp-scan)
+    (nmap -sU -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
     # sctp-init-scan)
     #     (nmap -sY -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     #     ;;

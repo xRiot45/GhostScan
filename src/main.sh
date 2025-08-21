@@ -202,7 +202,7 @@ while true; do
             PORT_DISCOVERY_METHOD="idle-scan:$zombie_ip"
             ;;
 
-        # 9) PORT_DISCOVERY_METHOD="udp-scan" ;;
+        7) PORT_DISCOVERY_METHOD="udp-scan" ;;
         # 10) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
         # 11) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
         # 12)
