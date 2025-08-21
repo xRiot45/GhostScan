@@ -203,19 +203,8 @@ while true; do
             ;;
 
         7) PORT_DISCOVERY_METHOD="udp-scan" ;;
-        # 10) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
-        # 11) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
-        # 12)
-        #     METHODS=("tcp-connect-scan" "stealth-scan" "xmas-scan" "fin-scan" "null-scan"
-        #         "maimon-scan" "ack-flag-probe-scan" "ttl-based-ack-flag-probe-scan"
-        #         "window-based-ack-flag-probe-scan" "idle-scan"
-        #         "udp-scan" "sctp-init-scan" "sctp-cookie-echo-scan")
-        #     for PORT_DISCOVERY_METHOD in "${METHODS[@]}"; do
-        #         echo -e "${YLW}[i] Running $PORT_DISCOVERY_METHOD...${RST}"
-        #         bash src/modules/port_discovery.sh "$target" "$TARGET_RAW_DIR" "$PORT_DISCOVERY_METHOD"
-        #     done
-        #     continue
-        #     ;;
+        8) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
+        # 9) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
         0)
             banner
             continue

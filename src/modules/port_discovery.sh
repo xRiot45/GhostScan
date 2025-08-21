@@ -51,9 +51,9 @@ idle-scan:*)
 udp-scan)
     (nmap -sU -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-    # sctp-init-scan)
-    #     (nmap -sY -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
-    #     ;;
+sctp-init-scan)
+    (nmap -sY -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
     # sctp-cookie-echo-scan)
     # (nmap -sZ -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     # ;;
