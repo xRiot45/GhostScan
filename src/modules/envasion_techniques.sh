@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TARGET=$1
+TARGET_DIR=$2
+METHOD=$3
