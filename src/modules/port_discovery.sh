@@ -57,6 +57,9 @@ sctp-init-scan)
 sctp-cookie-echo-scan)
     (nmap -sZ -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+service-version-detection)
+    (nmap -sV -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $METHOD"
     exit 1

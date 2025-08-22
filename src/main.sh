@@ -55,6 +55,7 @@ function show_menu_port_discovery() {
     echo -e "   ${GRN}7${RST}) UDP Scan                             "
     echo -e "   ${GRN}8${RST}) SCTP INIT Scan                       "
     echo -e "   ${GRN}9${RST}) SCTP COOKIE ECHO Scan                "
+    echo -e "   ${GRN}10${RST}) Service Version Detection           "
     echo -e "   ${GRN}0${RST}) Back                                 "
     echo -e "   "
 }
@@ -205,6 +206,7 @@ while true; do
         7) PORT_DISCOVERY_METHOD="udp-scan" ;;
         8) PORT_DISCOVERY_METHOD="sctp-init-scan" ;;
         9) PORT_DISCOVERY_METHOD="sctp-cookie-echo-scan" ;;
+        10) PORT_DISCOVERY_METHOD="service-version-detection" ;;
         0)
             banner
             continue
