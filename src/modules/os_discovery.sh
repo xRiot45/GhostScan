@@ -23,6 +23,9 @@ default-os-detection)
 script-engine-os-detection)
     (nmap --script smb-os-discovery.nse -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+ipv6-os-detection)
+    (nmap -6 -O -v $TARGET | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $METHOD"
     exit 1
