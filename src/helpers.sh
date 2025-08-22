@@ -1,167 +1,258 @@
-# Eksekusi modul
-function run_module() {
-    local module=$1
-    local target=$2
-    local dir=$3
-    local method=$4
+#!/bin/bash
+source src/utils/colors.sh
 
-    echo -e "${YLW}[i] Running $method...${RST}"
-    bash "src/modules/$module.sh" "$target" "$dir" "$method"
-}
+locate_module_host_discovery="src/modules/host_discovery.sh"
+locate_module_port_discovery="src/modules/port_discovery.sh"
+locate_module_os_discovery="src/modules/os_discovery.sh"
+locate_module_evasion_techniques="src/modules/evasion_techniques.sh"
 
-# Handler Host Discovery
 function handle_host_discovery() {
-    local target=$1
-    local dir=$2
+    local target="$1"
+    local dir="$2"
 
-    show_menu_host_discovery
-    read -p "Select Method: " method
+    host_menu() {
+        printf '%s\n' \
+            "ARP Ping Scan" \
+            "UDP Ping Scan" \
+            "ICMP Echo Ping Scan" \
+            "ICMP Echo Ping Sweep" \
+            "ICMP Timestamp Ping Scan" \
+            "ICMP Address Mask Ping Scan" \
+            "TCP SYN Ping Scan" \
+            "TCP ACK Ping Scan" \
+            "IP Protocol Ping Scan" \
+            "Run All Methods" \
+            "Back"
+    }
 
-    declare -A METHODS=(
-        [1]="arp-ping-scan"
-        [2]="udp-ping-scan"
-        [3]="icmp-echo-ping-scan"
-        [4]="icmp-echo-ping-sweep"
-        [5]="icmp-timestamp-ping-scan"
-        [6]="icmp-address-mask-ping-scan"
-        [7]="tcp-syn-ping-scan"
-        [8]="tcp-ack-ping-scan"
-        [9]="ip-protocol-ping-scan"
+    local choice
+    choice=$(
+        host_menu | fzf \
+            --ansi \
+            --prompt="Host Discovery > " \
+            --height=15 \
+            --reverse \
+            --border
     )
 
-    if [[ "$method" == "10" ]]; then
-        for m in "${METHODS[@]}"; do
-            run_module "host_discovery" "$target" "$dir" "$m"
+    case "${choice:-}" in
+    "Back" | "") return ;;
+    "Run All Methods")
+        for m in \
+            "arp-ping-scan" "udp-ping-scan" "icmp-echo-ping-scan" \
+            "icmp-echo-ping-sweep" "icmp-timestamp-ping-scan" \
+            "icmp-address-mask-ping-scan" "tcp-syn-ping-scan" \
+            "tcp-ack-ping-scan" "ip-protocol-ping-scan"; do
+            bash $locate_module_host_discovery "$target" "$dir" "$m"
         done
-    elif [[ "$method" == "0" ]]; then
-        banner
-        return
-    elif [[ -n "${METHODS[$method]}" ]]; then
-        run_module "host_discovery" "$target" "$dir" "${METHODS[$method]}"
-    else
-        echo -e "${RED}[!] Invalid option${RST}"
-    fi
+        ;;
+    "ARP Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "arp-ping-scan"
+        ;;
+    "UDP Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "udp-ping-scan"
+        ;;
+    "ICMP Echo Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "icmp-echo-ping-scan"
+        ;;
+    "ICMP Echo Ping Sweep")
+        bash $locate_module_host_discovery "$target" "$dir" "icmp-echo-ping-sweep"
+        ;;
+    "ICMP Timestamp Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "icmp-timestamp-ping-scan"
+        ;;
+    "ICMP Address Mask Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "icmp-address-mask-ping-scan"
+        ;;
+    "TCP SYN Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "tcp-syn-ping-scan"
+        ;;
+    "TCP ACK Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "tcp-ack-ping-scan"
+        ;;
+    "IP Protocol Ping Scan")
+        bash $locate_module_host_discovery "$target" "$dir" "ip-protocol-ping-scan"
+        ;;
+    esac
 }
 
-# Handler Port Discovery
 function handle_port_discovery() {
-    local target=$1
-    local dir=$2
+    local target="$1"
+    local dir="$2"
 
-    show_menu_port_discovery
-    read -p "Select Method: " method
+    port_menu() {
+        printf '%s\n' \
+            "TCP Connect / Full-Open Scan" \
+            "Stealth Scan (Half-Open Scan)" \
+            "Xmas Scan" \
+            "FIN Scan" \
+            "NULL Scan" \
+            "TCP Maimon Scan" \
+            "ACK Flag Probe Scan" \
+            "TTL-Based ACK Flag Probe Scan" \
+            "Window-Based ACK Flag Probe Scan" \
+            "IDLE / IPID Header Scan" \
+            "UDP Scan" \
+            "SCTP INIT Scan" \
+            "SCTP COOKIE ECHO Scan" \
+            "Service Version Detection" \
+            "Back"
+    }
 
-    case $method in
-    1) run_module "port_discovery" "$target" "$dir" "tcp-connect-scan" ;;
-    2) run_module "port_discovery" "$target" "$dir" "stealth-scan" ;;
-    3)
-        while true; do
-            show_menu_inverse_tcp_flag
-            read -p "Select Inverse TCP Method: " inv
-            case $inv in
-            1)
-                run_module "port_discovery" "$target" "$dir" "xmas-scan"
-                break
-                ;;
-            2)
-                run_module "port_discovery" "$target" "$dir" "fin-scan"
-                break
-                ;;
-            3)
-                run_module "port_discovery" "$target" "$dir" "null-scan"
-                break
-                ;;
-            0) return ;;
-            *) echo -e "${RED}[!] Invalid option${RST}" ;;
-            esac
-        done
-        ;;
-    4) run_module "port_discovery" "$target" "$dir" "tcp-maimon-scan" ;;
-    5)
-        while true; do
-            show_menu_ack_probe_scan
-            read -p "Select ACK Flag Probe Method: " ack
-            case $ack in
-            1)
-                run_module "port_discovery" "$target" "$dir" "ack-flag-probe-scan"
-                break
-                ;;
-            2)
-                run_module "port_discovery" "$target" "$dir" "ttl-based-ack-flag-probe-scan"
-                break
-                ;;
-            3)
-                run_module "port_discovery" "$target" "$dir" "window-based-ack-flag-probe-scan"
-                break
-                ;;
-            0) return ;;
-            *) echo -e "${RED}[!] Invalid option${RST}" ;;
-            esac
-        done
-        ;;
-    6)
-        read -p "$(echo -e ${YLW}[?]${RST} Enter Zombie IP:) " zombie_ip
-        run_module "port_discovery" "$target" "$dir" "idle-scan:$zombie_ip"
-        ;;
-    7) run_module "port_discovery" "$target" "$dir" "udp-scan" ;;
-    8) run_module "port_discovery" "$target" "$dir" "sctp-init-scan" ;;
-    9) run_module "port_discovery" "$target" "$dir" "sctp-cookie-echo-scan" ;;
-    10) run_module "port_discovery" "$target" "$dir" "service-version-detection" ;;
-    0)
-        banner
-        return
-        ;;
-    *) echo -e "${RED}[!] Invalid option${RST}" ;;
-    esac
-}
-
-# Handler OS Discovery
-function handle_os_discovery() {
-    local target=$1
-    local dir=$2
-
-    show_menu_os_discovery
-    read -p "Select Method: " method
-
-    case $method in
-    1) run_module "os_discovery" "$target" "$dir" "default-os-detection" ;;
-    2) run_module "os_discovery" "$target" "$dir" "script-engine-os-detection" ;;
-    3) run_module "os_discovery" "$target" "$dir" "ipv6-os-detection" ;;
-    0)
-        banner
-        return
-        ;;
-    *) echo -e "${RED}[!] Invalid option${RST}" ;;
-    esac
-}
-
-# Handler Evasion
-function handle_evasion() {
-    local target=$1
-    local dir=$2
-
-    show_menu_evasion_techniques
-    read -p "Select Method: " method
-
-    declare -A METHODS=(
-        [1]="packet-fragmentation-scan"
-        [2]="source-routing-scan"
-        [3]="source-port-manipulation-scan"
-        [4]="ip-address-decoy-scan"
-        [5]="ip-address-spoofing-scan"
-        [6]="creating-custom-packets-scan"
-        [7]="randomizing-host-order-scan"
-        [8]="sending-bad-checksum-packets-scan"
-        [9]="proxy-servers-scan"
-        [10]="anonymizers-scan"
+    local choice
+    choice=$(
+        port_menu | fzf \
+            --ansi \
+            --prompt="Port Discovery > " \
+            --height=17 \
+            --reverse \
+            --border
     )
 
-    if [[ "$method" == "0" ]]; then
-        banner
-        return
-    elif [[ -n "${METHODS[$method]}" ]]; then
-        run_module "evasion" "$target" "$dir" "${METHODS[$method]}"
-    else
-        echo -e "${RED}[!] Invalid option${RST}"
-    fi
+    case "${choice:-}" in
+    "Back" | "") return ;;
+    "TCP Connect / Full-Open Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "tcp-connect-scan"
+        ;;
+    "Stealth Scan (Half-Open Scan)")
+        bash $locate_module_port_discovery "$target" "$dir" "stealth-scan"
+        ;;
+    "Xmas Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "xmas-scan"
+        ;;
+    "FIN Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "fin-scan"
+        ;;
+    "NULL Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "null-scan"
+        ;;
+    "TCP Maimon Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "tcp-maimon-scan"
+        ;;
+    "ACK Flag Probe Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "ack-flag-probe-scan"
+        ;;
+    "TTL-Based ACK Flag Probe Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "ttl-based-ack-flag-probe-scan"
+        ;;
+    "Window-Based ACK Flag Probe Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "window-based-ack-flag-probe-scan"
+        ;;
+    "IDLE / IPID Header Scan")
+        read -rp "$(echo -e ${YLW}[?]${RST} Enter Zombie IP:) " zombie_ip
+        bash $locate_module_port_discovery "$target" "$dir" "idle-scan:$zombie_ip"
+        ;;
+    "UDP Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "udp-scan"
+        ;;
+    "SCTP INIT Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "sctp-init-scan"
+        ;;
+    "SCTP COOKIE ECHO Scan")
+        bash $locate_module_port_discovery "$target" "$dir" "sctp-cookie-echo-scan"
+        ;;
+    "Service Version Detection")
+        bash $locate_module_port_discovery "$target" "$dir" "service-version-detection"
+        ;;
+    esac
+}
+
+function handle_os_discovery() {
+    local target="$1"
+    local dir="$2"
+
+    os_menu() {
+        printf '%s\n' \
+            "Default OS Detection" \
+            "Script Engine OS Detection" \
+            "IPv6 OS Detection" \
+            "Back"
+    }
+
+    local choice
+    choice=$(
+        os_menu | fzf \
+            --ansi \
+            --prompt="OS Discovery > " \
+            --height=10 \
+            --reverse \
+            --border
+    )
+
+    case "${choice:-}" in
+    "Back" | "") return ;;
+    "Default OS Detection")
+        bash $locate_module_os_discovery "$target" "$dir" "default-os-detection"
+        ;;
+    "Script Engine OS Detection")
+        bash $locate_module_os_discovery "$target" "$dir" "script-engine-os-detection"
+        ;;
+    "IPv6 OS Detection")
+        bash $locate_module_os_discovery "$target" "$dir" "ipv6-os-detection"
+        ;;
+    esac
+}
+
+function handle_evasion_techniques() {
+    local target="$1"
+    local dir="$2"
+
+    evasion_menu() {
+        printf '%s\n' \
+            "SYN/FIN Scanning Using IP Fragments" \
+            "Source Routing Scan" \
+            "Source Port Manipulation Scan" \
+            "IP Address Decoy Scan" \
+            "IP Address Spoofing Scan" \
+            "Creating Custom Packets Scan" \
+            "Randomizing Host Order Scan" \
+            "Sending Bad Checksum Packets Scan" \
+            "Proxy Servers Scan" \
+            "Anonymizers Scan" \
+            "Back"
+    }
+
+    local choice
+    choice=$(
+        evasion_menu | fzf \
+            --ansi \
+            --prompt="Evasion Techniques > " \
+            --height=15 \
+            --reverse \
+            --border
+    )
+
+    case "${choice:-}" in
+    "Back" | "") return ;;
+    "SYN/FIN Scanning Using IP Fragments")
+        bash $locate_module_evasion_techniques "$target" "$dir" "packet-fragmentation-scan"
+        ;;
+    "Source Routing Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "source-routing-scan"
+        ;;
+    "Source Port Manipulation Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "source-port-manipulation-scan"
+        ;;
+    "IP Address Decoy Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "ip-address-decoy-scan"
+        ;;
+    "IP Address Spoofing Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "ip-address-spoofing-scan"
+        ;;
+    "Creating Custom Packets Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "custom-packets-scan"
+        ;;
+    "Randomizing Host Order Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "randomizing-host-order-scan"
+        ;;
+    "Sending Bad Checksum Packets Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "bad-checksum-packets-scan"
+        ;;
+    "Proxy Servers Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "proxy-servers-scan"
+        ;;
+    "Anonymizers Scan")
+        bash $locate_module_evasion_techniques "$target" "$dir" "anonymizers-scan"
+        ;;
+    esac
 }

@@ -1,5 +1,15 @@
 #!/bin/bash
 
+set -euo pipefail
+
+# Dependencies check
+need_cmd() { command -v "$1" >/dev/null 2>&1 || {
+    echo "Missing dependency: $1"
+    exit 1
+}; }
+need_cmd nmap
+need_cmd fzf
+
 source src/utils/banner.sh
 source src/utils/colors.sh
 source src/utils/menus.sh
@@ -18,26 +28,40 @@ fi
 
 # Start
 banner
-read -p "$(echo -e ${YLW}[?]${RST} Enter target IP/Range:) " target
+read -rp "$(echo -e ${YLW}[?]${RST} Enter target IP/Range:) " target
 
 SAFE_TARGET=$(echo "$target" | sed 's/\//_/g')
 TARGET_RAW_DIR="$RAW_DIR/$SAFE_TARGET"
 mkdir -p "$TARGET_RAW_DIR"
 
-# Main loop
-while true; do
-    show_menu
-    read -p "Select Option: " opt
+main_menu() {
+    printf '%s\n' \
+        "Host Discovery" \
+        "Port & Service Discovery" \
+        "OS Detection" \
+        "IDS/Firewall Evasion Techniques" \
+        "Exit"
+}
 
-    case $opt in
-    1) handle_host_discovery "$target" "$TARGET_RAW_DIR" ;;
-    2) handle_port_discovery "$target" "$TARGET_RAW_DIR" ;;
-    3) handle_os_discovery "$target" "$TARGET_RAW_DIR" ;;
-    4) handle_evasion "$target" "$TARGET_RAW_DIR" ;;
-    5)
+# Main loop with fzf
+while true; do
+    choice=$(main_menu | fzf \
+        --ansi \
+        --prompt="GhostScan > " \
+        --height=15 \
+        --reverse \
+        --border \
+        --margin=1,2 \
+        --color=fg+:yellow,header:blue,info:green,pointer:cyan,marker:red)
+
+    case "${choice:-}" in
+    "Host Discovery") handle_host_discovery "$target" "$TARGET_RAW_DIR" ;;
+    "Port & Service Discovery") handle_port_discovery "$target" "$TARGET_RAW_DIR" ;;
+    "OS Detection") handle_os_discovery "$target" "$TARGET_RAW_DIR" ;;
+    "IDS/Firewall Evasion Techniques") handle_evasion_techniques "$target" "$TARGET_RAW_DIR" ;;
+    "Exit" | "")
         echo -e "${MAG}[i] Exiting GhostScan...${RST}"
         exit 0
         ;;
-    *) echo -e "${RED}[!] Invalid choice${RST}" ;;
     esac
 done
