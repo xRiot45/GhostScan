@@ -19,10 +19,11 @@ mkdir -p "$RAW_DIR" "$PARSED_DIR"
 # Main Menu
 function show_menu() {
     echo -e "   "
-    echo -e "   ${GRN}1${RST}) Host Discovery              "
-    echo -e "   ${GRN}2${RST}) Port & Service Discovery    "
-    echo -e "   ${GRN}3${RST}) OS Detection                "
-    echo -e "   ${GRN}4${RST}) Exit                        "
+    echo -e "   ${GRN}1${RST}) Host Discovery                               "
+    echo -e "   ${GRN}2${RST}) Port & Service Discovery                     "
+    echo -e "   ${GRN}3${RST}) OS Detection                                 "
+    echo -e "   ${GRN}4${RST}) IDS/Firewall Evasion Techniques              "
+    echo -e "   ${GRN}4${RST}) Exit                                         "
     echo -e "   "
 }
 
@@ -68,6 +69,22 @@ function show_menu_os_discovery() {
     echo -e "   ${GRN}3${RST}) IPv6 OS Detection           "
     echo -e "   ${GRN}0${RST}) Back                         "
     echo -e "   "
+}
+
+# Submenu: IDS/Firewall Evasion Techniques
+function show_menu_evasion_techniques() {
+    echo -e "   "
+    echo -e "   ${GRN}1${RST}) Packet Fragmentation Scan            "
+    echo -e "   ${GRN}2${RST}) Source Routing Scan                  "
+    echo -e "   ${GRN}3${RST}) Source Port Manipulation Scan        "
+    echo -e "   ${GRN}4${RST}) IP Address Decoy Scan                "
+    echo -e "   ${GRN}5${RST}) IP Address Spoofing Scan             "
+    echo -e "   ${GRN}6${RST}) Creating Custom Packets Scan         "
+    echo -e "   ${GRN}7${RST}) Randomizing Host Order Scan          "
+    echo -e "   ${GRN}8${RST}) Sending Bad Checksum Packets Scan    "
+    echo -e "   ${GRN}9${RST}) Proxy Servers Scan                   "
+    echo -e "   ${GRN}10${RST}) Anonymizers Scan                    "
+    echo -e "   ${GRN}0${RST}) Back                                 "
 }
 
 # Submenu: Inverse TCP Flag Scan
