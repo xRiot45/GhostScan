@@ -236,9 +236,6 @@ function handle_evasion_techniques() {
     "MAC Address Spoofing")
         bash $locate_module_evasion_techniques "$target" "$dir" "mac-address-spoofing"
         ;;
-    "Creating Custom Packets")
-        bash $locate_module_evasion_techniques "$target" "$dir" "custom-packets"
-        ;;
     "Randomizing Host Order")
         bash $locate_module_evasion_techniques "$target" "$dir" "randomizing-host-order"
         ;;

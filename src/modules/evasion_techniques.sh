@@ -30,6 +30,9 @@ ip-address-decoy)
 mac-address-spoofing)
     (nmap -sT -Pn --spoof-mac 0 -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+randomizing-host-order)
+    (nmap --randomize-hosts -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $method"
     exit 1
