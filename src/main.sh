@@ -60,6 +60,15 @@ function show_menu_port_discovery() {
     echo -e "   "
 }
 
+# Submenu: OS Discovery
+function show_menu_os_discovery() {
+    echo -e "   "
+    echo -e "   ${GRN}1${RST}) Default OS Detection         "
+    echo -e "   ${GRN}2${RST}) Custom OS Detection          "
+    echo -e "   ${GRN}0${RST}) Back                         "
+    echo -e "   "
+}
+
 # Submenu: Inverse TCP Flag Scan
 function show_menu_inverse_tcp_flag() {
     echo -e "   "
@@ -221,7 +230,22 @@ while true; do
         ;;
 
     3)
-        echo -e "${CYN}[i] OS Detection coming soon...${RST}"
+        show_menu_os_discovery
+        read -p "Select Method: " method
+
+        case $method in
+        1) OS_DISCOVERY_METHOD="default-os-detection" ;;
+        0)
+            banner
+            continue
+            ;;
+        *)
+            echo -e "${RED}[!] Invalid option${RST}"
+            continue
+            ;;
+        esac
+
+        bash src/modules/os_discovery.sh "$target" "$TARGET_RAW_DIR" "$OS_DISCOVERY_METHOD"
         ;;
     4)
         echo -e "${MAG}[i] Exiting GhostScan...${RST}"
