@@ -6,8 +6,6 @@ target=$1
 dir=$2
 method=$3
 
-echo "[OS Discovery] Target: $target | Method: $method | Output dir: $dir"
-
 source src/utils/progress_bar.sh
 
 OUTPUT_DIR="$dir/os_discovery"
@@ -16,7 +14,7 @@ mkdir -p "$OUTPUT_DIR"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 OUTPUT_FILE="$OUTPUT_DIR/${method}_scan_$TIMESTAMP.txt"
 
-echo -e "\n\e[32m[+]\e[0m Starting OS Discovery (\e[36m$method\e[0m) on \e[33m$target\e[0m ..."
+echo -e "\n\e[32m[+]\e[0m Starting (\e[36m$method\e[0m) on \e[33m$target\e[0m ..."
 echo -e "\e[32m[+]\e[0m Output will be saved to \e[35m$OUTPUT_FILE\e[0m"
 echo ""
 
