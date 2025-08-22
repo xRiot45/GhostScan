@@ -21,9 +21,15 @@ echo -e "\e[32m[+]\e[0m Output will be saved to \e[35m$OUTPUT_FILE\e[0m"
 echo ""
 
 case $method in
-default-os-detection) (nmap -O -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-script-engine-os-detection) (nmap --script smb-os-discovery.nse -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-ipv6-os-detection) (nmap -6 -O -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
+default-os-detection)
+    (nmap -O -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+script-engine-os-detection)
+    (nmap --script smb-os-discovery.nse -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+ipv6-os-detection)
+    (nmap -6 -O -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $method"
     exit 1

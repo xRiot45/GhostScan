@@ -21,23 +21,49 @@ echo -e "\e[32m[+]\e[0m Output will be saved to \e[35m$OUTPUT_FILE\e[0m"
 echo ""
 
 case $method in
-tcp-connect-scan) (nmap -sT -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-stealth-scan) (nmap -sS -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-xmas-scan) (nmap -sX -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-fin-scan) (nmap -sF -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-null-scan) (nmap -sN -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-tcp-maimon-scan) (nmap -sM -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-ack-flag-probe-scan) (nmap -sA -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-ttl-based-ack-flag-probe-scan) (nmap -sA --ttl 100 -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-window-based-ack-flag-probe-scan) (nmap -sA -sW -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
+tcp-connect-scan)
+    (nmap -sT -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+stealth-scan)
+    (nmap -sS -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+xmas-scan)
+    (nmap -sX -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+fin-scan)
+    (nmap -sF -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+null-scan)
+    (nmap -sN -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+tcp-maimon-scan)
+    (nmap -sM -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+ack-flag-probe-scan)
+    (nmap -sA -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+ttl-based-ack-flag-probe-scan)
+    (nmap -sA --ttl 100 -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+window-based-ack-flag-probe-scan)
+    (nmap -sA -sW -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 idle-scan:*)
     zombie_ip=$(echo "$method" | cut -d':' -f2)
     (nmap -sI "$zombie_ip" "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-udp-scan) (nmap -sU -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-sctp-init-scan) (nmap -sY -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-sctp-cookie-echo-scan) (nmap -sZ -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-service-version-detection) (nmap -sV -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
+udp-scan)
+    (nmap -sU -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+sctp-init-scan)
+    (nmap -sY -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+sctp-cookie-echo-scan)
+    (nmap -sZ -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+service-version-detection)
+    (nmap -sV -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[-]\e[0m Invalid method: $method"
     exit 1

@@ -21,18 +21,34 @@ echo -e "\e[32m[+]\e[0m Output will be saved to \e[35m$OUTPUT_FILE\e[0m"
 echo ""
 
 case $method in
-arp-ping-scan) (nmap -sn -PR "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-udp-ping-scan) (nmap -sn -PU "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-icmp-echo-ping-scan) (nmap -sn -PE "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
+arp-ping-scan)
+    (nmap -sn -PR "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+udp-ping-scan)
+    (nmap -sn -PU "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+icmp-echo-ping-scan)
+    (nmap -sn -PE "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 icmp-echo-ping-sweep)
     SUBNET="${target}/24"
     (nmap -sn -PE "$SUBNET" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
-icmp-timestamp-ping-scan) (nmap -sn -PP "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-icmp-address-mask-ping-scan) (nmap -sn -PM "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-tcp-syn-ping-scan) (nmap -sn -PS "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-tcp-ack-ping-scan) (nmap -sn -PA "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
-ip-protocol-ping-scan) (nmap -sn -PO "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 & ;;
+icmp-timestamp-ping-scan)
+    (nmap -sn -PP "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+icmp-address-mask-ping-scan)
+    (nmap -sn -PM "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+tcp-syn-ping-scan)
+    (nmap -sn -PS "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+tcp-ack-ping-scan)
+    (nmap -sn -PA "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+ip-protocol-ping-scan)
+    (nmap -sn -PO "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $method"
     exit 1
