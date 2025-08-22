@@ -247,7 +247,7 @@ while true; do
         bash src/modules/port_discovery.sh "$target" "$TARGET_RAW_DIR" "$PORT_DISCOVERY_METHOD"
         ;;
 
-    3)
+    3) # OS Discovery
         show_menu_os_discovery
         read -p "Select Method: " method
 
