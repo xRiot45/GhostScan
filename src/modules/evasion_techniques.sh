@@ -33,6 +33,9 @@ mac-address-spoofing)
 randomizing-host-order)
     (nmap --randomize-hosts -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+sending-bad-checksums)
+    (nmap --badsum -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $method"
     exit 1

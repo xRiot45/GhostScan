@@ -203,9 +203,8 @@ function handle_evasion_techniques() {
             "Source Port Manipulation" \
             "IP Address Decoy" \
             "MAC Address Spoofing" \
-            "Creating Custom Packets" \
             "Randomizing Host Order" \
-            "Sending Bad Checksum Packets" \
+            "Sending Bad Checksum" \
             "Proxy Servers" \
             "Anonymizers" \
             "Back"
@@ -239,8 +238,8 @@ function handle_evasion_techniques() {
     "Randomizing Host Order")
         bash $locate_module_evasion_techniques "$target" "$dir" "randomizing-host-order"
         ;;
-    "Sending Bad Checksum Packets")
-        bash $locate_module_evasion_techniques "$target" "$dir" "bad-checksum-packets"
+    "Sending Bad Checksum")
+        bash $locate_module_evasion_techniques "$target" "$dir" "sending-bad-checksums"
         ;;
     "Proxy Servers")
         bash $locate_module_evasion_techniques "$target" "$dir" "proxy-servers"
