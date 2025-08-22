@@ -241,11 +241,5 @@ function handle_evasion_techniques() {
     "Sending Bad Checksum")
         bash $locate_module_evasion_techniques "$target" "$dir" "sending-bad-checksums"
         ;;
-    "Proxy Servers")
-        bash $locate_module_evasion_techniques "$target" "$dir" "proxy-servers"
-        ;;
-    "Anonymizers")
-        bash $locate_module_evasion_techniques "$target" "$dir" "anonymizers"
-        ;;
     esac
 }
