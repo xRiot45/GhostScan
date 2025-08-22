@@ -1,5 +1,7 @@
 #!/bin/bash
 
-TARGET=$1
-TARGET_DIR=$2
-METHOD=$3
+target=$1
+dir=$2
+method=$3
+
+echo "[Envasion Techniques] Target: $target | Method: $method | Output dir: $dir"

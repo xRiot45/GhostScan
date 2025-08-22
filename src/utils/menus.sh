@@ -56,7 +56,7 @@ function show_menu_os_discovery() {
 # Submenu: IDS/Firewall Evasion Techniques
 function show_menu_evasion_techniques() {
     echo -e "   "
-    echo -e "   ${GRN}1${RST}) Packet Fragmentation Scan            "
+    echo -e "   ${GRN}1${RST}) SYN/FIN Scanning Using IP Fragments  "
     echo -e "   ${GRN}2${RST}) Source Routing Scan                  "
     echo -e "   ${GRN}3${RST}) Source Port Manipulation Scan        "
     echo -e "   ${GRN}4${RST}) IP Address Decoy Scan                "
