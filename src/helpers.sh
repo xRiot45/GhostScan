@@ -201,13 +201,13 @@ function handle_evasion_techniques() {
         printf '%s\n' \
             "SYN/FIN Scanning Using IP Fragments" \
             "Source Port Manipulation" \
-            "IP Address Decoy Scan" \
-            "IP Address Spoofing Scan" \
-            "Creating Custom Packets Scan" \
-            "Randomizing Host Order Scan" \
-            "Sending Bad Checksum Packets Scan" \
-            "Proxy Servers Scan" \
-            "Anonymizers Scan" \
+            "IP Address Decoy" \
+            "MAC Address Spoofing" \
+            "Creating Custom Packets" \
+            "Randomizing Host Order" \
+            "Sending Bad Checksum Packets" \
+            "Proxy Servers" \
+            "Anonymizers" \
             "Back"
     }
 
@@ -230,26 +230,26 @@ function handle_evasion_techniques() {
         read -rp "$(echo -e ${YLW}[?]${RST} Enter Port for Manipulation:) " port_manipulation
         bash $locate_module_evasion_techniques "$target" "$dir" "source-port-manipulation"
         ;;
-    "IP Address Decoy Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "ip-address-decoy-scan"
+    "IP Address Decoy")
+        bash $locate_module_evasion_techniques "$target" "$dir" "ip-address-decoy"
         ;;
-    "IP Address Spoofing Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "ip-address-spoofing-scan"
+    "MAC Address Spoofing")
+        bash $locate_module_evasion_techniques "$target" "$dir" "mac-address-spoofing"
         ;;
-    "Creating Custom Packets Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "custom-packets-scan"
+    "Creating Custom Packets")
+        bash $locate_module_evasion_techniques "$target" "$dir" "custom-packets"
         ;;
-    "Randomizing Host Order Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "randomizing-host-order-scan"
+    "Randomizing Host Order")
+        bash $locate_module_evasion_techniques "$target" "$dir" "randomizing-host-order"
         ;;
-    "Sending Bad Checksum Packets Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "bad-checksum-packets-scan"
+    "Sending Bad Checksum Packets")
+        bash $locate_module_evasion_techniques "$target" "$dir" "bad-checksum-packets"
         ;;
-    "Proxy Servers Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "proxy-servers-scan"
+    "Proxy Servers")
+        bash $locate_module_evasion_techniques "$target" "$dir" "proxy-servers"
         ;;
-    "Anonymizers Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "anonymizers-scan"
+    "Anonymizers")
+        bash $locate_module_evasion_techniques "$target" "$dir" "anonymizers"
         ;;
     esac
 }

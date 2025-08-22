@@ -24,6 +24,12 @@ source-port-manipulation)
     port_manipulation=$(echo "$method" | cut -d':' -f2)
     (nmap -g "$port_manipulation" -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
     ;;
+ip-address-decoy)
+    (nmap -D RND:10 -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
+mac-address-spoofing)
+    (nmap -sT -Pn --spoof-mac 0 -v "$target" | tee "$OUTPUT_FILE") >/dev/null 2>&1 &
+    ;;
 *)
     echo -e "\e[31m[!]\e[0m Unknown method: $method"
     exit 1
