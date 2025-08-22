@@ -64,7 +64,7 @@ function show_menu_port_discovery() {
 function show_menu_os_discovery() {
     echo -e "   "
     echo -e "   ${GRN}1${RST}) Default OS Detection         "
-    echo -e "   ${GRN}2${RST}) Custom OS Detection          "
+    echo -e "   ${GRN}2${RST}) Script Engine OS Detection   "
     echo -e "   ${GRN}0${RST}) Back                         "
     echo -e "   "
 }
@@ -235,6 +235,7 @@ while true; do
 
         case $method in
         1) OS_DISCOVERY_METHOD="default-os-detection" ;;
+        2) OS_DISCOVERY_METHOD="script-engine-os-detection" ;;
         0)
             banner
             continue
