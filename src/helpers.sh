@@ -200,8 +200,7 @@ function handle_evasion_techniques() {
     evasion_menu() {
         printf '%s\n' \
             "SYN/FIN Scanning Using IP Fragments" \
-            "Source Routing Scan" \
-            "Source Port Manipulation Scan" \
+            "Source Port Manipulation" \
             "IP Address Decoy Scan" \
             "IP Address Spoofing Scan" \
             "Creating Custom Packets Scan" \
@@ -225,13 +224,11 @@ function handle_evasion_techniques() {
     case "${choice:-}" in
     "Back" | "") return ;;
     "SYN/FIN Scanning Using IP Fragments")
-        bash $locate_module_evasion_techniques "$target" "$dir" "packet-fragmentation-scan"
+        bash $locate_module_evasion_techniques "$target" "$dir" "ip-fragmentation-scan"
         ;;
-    "Source Routing Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "source-routing-scan"
-        ;;
-    "Source Port Manipulation Scan")
-        bash $locate_module_evasion_techniques "$target" "$dir" "source-port-manipulation-scan"
+    "Source Port Manipulation")
+        read -rp "$(echo -e ${YLW}[?]${RST} Enter Port for Manipulation:) " port_manipulation
+        bash $locate_module_evasion_techniques "$target" "$dir" "source-port-manipulation"
         ;;
     "IP Address Decoy Scan")
         bash $locate_module_evasion_techniques "$target" "$dir" "ip-address-decoy-scan"
