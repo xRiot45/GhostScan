@@ -55,15 +55,13 @@ Identify operating systems of target hosts:
 Bypass firewalls and IDS/IPS using Nmap evasion features:
 
 * SYN/FIN Scanning Using IP Fragments
-* Source Routing Scan
-* Source Port Manipulation Scan
-* IP Address Decoy Scan
-* IP Address Spoofing Scan
-* Creating Custom Packets Scan
-* Randomizing Host Order Scan
-* Sending Bad Checksum Packets Scan
-* Proxy Servers Scan
-* Anonymizers Scan
+* Source Port Manipulation
+* IP Address Decoy
+* MAC Address Spoofing
+* Randomizing Host Order
+* Sending Bad Checksum Packets
+* Proxy Servers
+* Anonymizers
 
 ---
 
