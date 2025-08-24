@@ -3,10 +3,11 @@
 set -euo pipefail
 
 # Dependencies check
-need_cmd() { command -v "$1" >/dev/null 2>&1 || {
+function need_cmd() { command -v "$1" >/dev/null 2>&1 || {
     echo "Missing dependency: $1"
     exit 1
 }; }
+
 need_cmd nmap
 need_cmd fzf
 
@@ -34,7 +35,7 @@ SAFE_TARGET=$(echo "$target" | sed 's/\//_/g')
 TARGET_RAW_DIR="$RAW_DIR/$SAFE_TARGET"
 mkdir -p "$TARGET_RAW_DIR"
 
-main_menu() {
+function main_menu() {
     printf '%s\n' \
         "Host Discovery" \
         "Port & Service Discovery" \
